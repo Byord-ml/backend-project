@@ -5,12 +5,7 @@ let balance = 1000;
 let isOverdrawn = false;
 const TAX_RATE = 0.075
 
-const tx1 = 200;
-const tx2 = -150;
-const tx3 = 500;
-const tx4 = -75;
-const tx5 = -3000;
-
+const transactions = [200, -150, 500, -75, -300]
 
 const applyTransaction = (balance, amount) => {
   balance += eval(amount)
@@ -39,8 +34,30 @@ const applyWithTax = (balance, amount) => {
   return balance;
 }
 
-for (let i = 1; i < 6; i++) {
+function getTotal (transactions) {
+  let netCharge = 0
+  for (let i = 0; i < transactions.length; i++) {
+    netCharge += transactions[i]
+  }; 
+  return netCharge
+}
 
-  // console.log(applyWithTax( balance, eval(`tx${i}`))) }
-  console.log(`Tx ${i}: ${eval(`tx${i}`) > 0 ? "deposit" : "withdrawal"} of ${eval(`tx${i}`)}. Balance: ${applyWithTax(balance, eval(`tx${i}`))}. Status: ${getStatus(applyWithTax(balance, eval(`tx${i}`)))}`)
+function getLargestDeposit(transactions) {
+  let largest = transactions[0]
+
+  for (let i = 0; i < transactions.length; i++) {
+
+    if (largest >= transactions[i] && largest > 0) {
+      largest
+    } else if (largest < transactions[i] && largest > 0) {
+      largest = transactions[i]}
+  } return largest
 };
+
+// for (let i = 1; i < transactions.length; i++) {
+
+//   console.log(`Tx ${i}: ${eval(`tx${i}`) > 0 ? "deposit" : "withdrawal"} of ${eval(`tx${i}`)}. Balance: ${applyWithTax(balance, eval(`tx${i}`))}. Status: ${getStatus(applyWithTax(balance, eval(`tx${i}`)))}`)
+// };
+
+console.log(getTotal(transactions))
+console.log(getLargestDeposit(transactions));
