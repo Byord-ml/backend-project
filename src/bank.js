@@ -1,6 +1,14 @@
 const accountHolder = "Biodun";
 const accountType = "savings";
 
+const account = {
+  holder: "Biodun",
+  balance: 1000,
+  type: "savings",
+  transactions: []
+};
+
+
 let balance = 1000;
 let isOverdrawn = false;
 const TAX_RATE = 0.075
@@ -54,10 +62,27 @@ function getLargestDeposit(transactions) {
   } return largest
 };
 
-// for (let i = 1; i < transactions.length; i++) {
+const processTransaction = (account, amount, description) => {
+  let transact = account.transactions;
+  let newTransact = {};
 
-//   console.log(`Tx ${i}: ${eval(`tx${i}`) > 0 ? "deposit" : "withdrawal"} of ${eval(`tx${i}`)}. Balance: ${applyWithTax(balance, eval(`tx${i}`))}. Status: ${getStatus(applyWithTax(balance, eval(`tx${i}`)))}`)
-// };
+  newTransact["amount"] = amount;
+  newTransact["description"] = description;
+  newTransact["balanceAter"] = (account.balance += amount);
+  
+  transact.push(newTransact);
 
-console.log(getTotal(transactions))
-console.log(getLargestDeposit(transactions));
+  return account
+};
+
+const printStatement = (account) => {
+  for (let i = 0; i < account.transactions.length; i++) {
+    console.log(`Transaction ${i}: NGN ${account.transactions[i].amount}`);
+  };
+};
+
+console.log(processTransaction(account, 500, "Fees for gas"));
+console.log(processTransaction(account, 900, "Groceries"));
+console.log(processTransaction(account, 1250, "Tax and Necessities"));
+
+console.log(printStatement(account));
